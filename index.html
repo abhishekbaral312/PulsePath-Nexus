@@ -1,0 +1,169 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PulsePath Nexus | Intelligent Symptom Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="scroll-line" id="scrollLine" aria-hidden="true"></div>
+  <div class="ambient ambient-a" aria-hidden="true"></div>
+  <div class="ambient ambient-b" aria-hidden="true"></div>
+  <div class="ambient ambient-c" aria-hidden="true"></div>
+
+  <header class="site-header section reveal">
+    <a href="#" class="brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      PulsePath Nexus
+    </a>
+
+    <button id="mobileNavToggle" class="mobile-nav-toggle" type="button" aria-expanded="false" aria-controls="topNav">
+      Menu
+    </button>
+
+    <nav class="top-nav" id="topNav">
+      <a href="#checker">Checker</a>
+      <a href="#resultPanel">Result</a>
+      <a href="#history">History</a>
+    </nav>
+
+    <div class="theme-switch" role="group" aria-label="Theme switcher">
+      <button class="theme-btn is-active" type="button" data-theme-choice="dark" aria-pressed="true">Dark</button>
+      <button class="theme-btn" type="button" data-theme-choice="aurora" aria-pressed="false">Aurora</button>
+      <button class="theme-btn" type="button" data-theme-choice="light" aria-pressed="false">Light</button>
+    </div>
+
+    <button id="logoutBtn" class="btn btn-ghost" type="button">Logout</button>
+  </header>
+
+  <main>
+    <section class="hero section">
+      <div class="hero-copy reveal">
+        <p class="eyebrow">Adaptive AI Health Companion</p>
+        <h1>Symptom intelligence with cinematic clarity.</h1>
+        <p class="hero-lead">Feed symptoms once, then explore likely conditions, confidence behavior, and safety guidance in a modern interactive dashboard.</p>
+
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#checker">Start Analysis</a>
+          <button class="btn btn-secondary" id="loadNowBtn" type="button">Load My History</button>
+        </div>
+
+        <p class="tiny-note">For educational guidance only. Not a medical diagnosis.</p>
+      </div>
+
+      <aside class="hero-orbit reveal">
+        <div class="orbit-core">
+          <span class="core-title">Latest Signal</span>
+          <strong class="core-condition" id="heroCondition">No diagnosis yet</strong>
+          <p class="core-note" id="heroConfidence">Run analysis to populate your latest confidence profile.</p>
+          <div class="metric-band">
+            <span>Confidence Layer</span>
+            <strong id="heroBandLabel">-</strong>
+          </div>
+        </div>
+        <div class="orbit-ring ring-one" aria-hidden="true"></div>
+        <div class="orbit-ring ring-two" aria-hidden="true"></div>
+      </aside>
+    </section>
+
+    <section class="checker section" id="checker">
+      <div class="checker-card reveal">
+        <div class="checker-head">
+          <h2>Symptom Studio</h2>
+          <p>Try examples like <code>irritation, itching, redness</code>. Press Enter or click Analyze.</p>
+        </div>
+
+        <div class="input-row">
+          <input id="symptoms" type="text" placeholder="Type symptoms, separated by commas..." />
+          <button id="diagnoseBtn" class="btn btn-primary" type="button">Analyze</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="result section" id="resultPanel">
+      <div class="panel-head reveal">
+        <h2>Diagnosis Intelligence</h2>
+        <span class="status" id="resultStatus">Ready</span>
+      </div>
+
+      <div class="result-grid">
+        <article class="card spotlight reveal">
+          <h3>Most Likely Condition</h3>
+          <p class="primary-value" id="mostLikely">-</p>
+          <p class="muted description" id="descriptionText">Your model narrative appears here after analysis.</p>
+        </article>
+
+        <article class="card reveal">
+          <h3>Model Telemetry</h3>
+          <dl class="meta-list">
+            <div>
+              <dt>Symptom count</dt>
+              <dd id="symptomCount">-</dd>
+            </div>
+            <div>
+              <dt>Uncertainty</dt>
+              <dd id="uncertainty">-</dd>
+            </div>
+            <div>
+              <dt>Entropy score</dt>
+              <dd id="entropy">-</dd>
+            </div>
+            <div>
+              <dt>Overall confidence</dt>
+              <dd><span id="confidenceChip" class="chip">-</span></dd>
+            </div>
+          </dl>
+        </article>
+
+        <article class="card reveal full-width">
+          <h3>Top Predictions</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Condition</th>
+                  <th>Probability</th>
+                  <th>Confidence</th>
+                </tr>
+              </thead>
+              <tbody id="predictionsBody">
+                <tr>
+                  <td colspan="3" class="empty">No predictions yet.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="card reveal full-width">
+          <h3>Precautions</h3>
+          <ul id="precautionsList" class="list">
+            <li>Run analysis to view personalized precaution guidance.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="history section" id="history">
+      <div class="panel-head reveal">
+        <h2>Diagnosis Timeline</h2>
+        <button id="historyBtn" class="btn btn-secondary" type="button">Load History</button>
+      </div>
+
+      <div id="historyList" class="history-list reveal">
+        <article class="history-item empty-state">History is waiting to be loaded.</article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer section reveal">
+    <p>© <span id="year"></span> PulsePath Nexus. Educational use only.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

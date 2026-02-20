@@ -1,0 +1,280 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PulsePath Login</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #08111f;
+      --surface: rgba(17, 28, 46, 0.72);
+      --line: rgba(151, 182, 219, 0.28);
+      --ink: #ecf5ff;
+      --muted: #95acc8;
+      --accent: #3de6bf;
+      --accent-2: #5ba9ff;
+      --danger: #ff8b98;
+      --ok: #6ff2b1;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: "Plus Jakarta Sans", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 18% 16%, rgba(61, 230, 191, 0.18) 0%, transparent 30%),
+        radial-gradient(circle at 84% 10%, rgba(91, 169, 255, 0.2) 0%, transparent 35%),
+        var(--bg);
+      display: grid;
+      place-items: center;
+      padding: 1rem;
+      overflow: hidden;
+    }
+
+    .ambient {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(70px);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .ambient.a {
+      width: 300px;
+      height: 300px;
+      background: rgba(61, 230, 191, 0.22);
+      left: -110px;
+      top: 240px;
+      animation: floatY 10s ease-in-out infinite;
+    }
+
+    .ambient.b {
+      width: 320px;
+      height: 320px;
+      background: rgba(91, 169, 255, 0.2);
+      right: -130px;
+      top: 160px;
+      animation: floatY 13s ease-in-out infinite;
+    }
+
+    .card {
+      width: min(460px, 100%);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--surface);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 24px 56px rgba(1, 8, 18, 0.45);
+      padding: 24px;
+      animation: cardIn 0.55s ease both;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: "Outfit", sans-serif;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: conic-gradient(from 120deg, var(--accent), var(--accent-2), var(--accent));
+      box-shadow: 0 0 12px rgba(61, 230, 191, 0.65);
+      animation: spin 6s linear infinite;
+    }
+
+    h1 {
+      margin: 0;
+      font-family: "Outfit", sans-serif;
+      font-size: clamp(1.7rem, 3.8vw, 2.2rem);
+      letter-spacing: -0.03em;
+      background: linear-gradient(120deg, #fff, #cfe7ff 46%, #9beedd);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    p {
+      margin: 8px 0 20px;
+      color: var(--muted);
+    }
+
+    .field {
+      display: grid;
+      gap: 7px;
+      margin-bottom: 13px;
+    }
+
+    label {
+      font-size: 0.88rem;
+      color: #bdd2ea;
+      font-weight: 600;
+    }
+
+    input {
+      width: 100%;
+      border: 1px solid rgba(161, 194, 233, 0.35);
+      background: rgba(9, 18, 34, 0.72);
+      border-radius: 12px;
+      padding: 12px 13px;
+      color: var(--ink);
+      font: inherit;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    input:focus {
+      border-color: rgba(61, 230, 191, 0.65);
+      box-shadow: 0 0 0 3px rgba(61, 230, 191, 0.2);
+    }
+
+    button {
+      width: 100%;
+      border: 0;
+      border-radius: 999px;
+      padding: 11px 16px;
+      margin-top: 6px;
+      background: linear-gradient(130deg, var(--accent), var(--accent-2));
+      color: #08121f;
+      font: inherit;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform 0.2s ease, filter 0.2s ease;
+    }
+
+    button:hover { transform: translateY(-1px); filter: brightness(1.06); }
+    button:disabled { opacity: 0.7; cursor: not-allowed; }
+
+    #out {
+      margin: 14px 0 0;
+      min-height: 22px;
+      color: var(--danger);
+      font-size: 0.9rem;
+      white-space: pre-wrap;
+    }
+
+    .ok { color: var(--ok) !important; }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes floatY {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(24px); }
+    }
+
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(14px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+  </style>
+</head>
+<body>
+  <div class="ambient a" aria-hidden="true"></div>
+  <div class="ambient b" aria-hidden="true"></div>
+
+  <main class="card">
+    <div class="brand">
+      <span class="dot" aria-hidden="true"></span>
+      PulsePath Nexus
+    </div>
+
+    <h1>Login</h1>
+    <p>Access your AI diagnosis dashboard.</p>
+
+    <div class="field">
+      <label for="email">Email</label>
+      <input id="email" type="email" placeholder="you@example.com" autocomplete="email" />
+    </div>
+
+    <div class="field">
+      <label for="password">Password</label>
+      <input id="password" type="password" placeholder="Your password" autocomplete="current-password" />
+    </div>
+
+    <button id="loginBtn" type="button" onclick="login()">Login</button>
+    <p style="margin: 12px 0 0; font-size: 0.9rem;">
+      Don't have an account? <a href="register.html" style="color: var(--accent);">Register</a>
+    </p>
+
+    <pre id="out"></pre>
+  </main>
+
+  <script>
+    const out = document.getElementById("out");
+    const email = document.getElementById("email");
+    const password = document.getElementById("password");
+    const loginBtn = document.getElementById("loginBtn");
+
+    [email, password].forEach((el) => {
+      el.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          login();
+        }
+      });
+    });
+
+    async function login() {
+      const userEmail = email.value.trim();
+      const userPassword = password.value;
+
+      if (!userEmail || !userPassword) {
+        out.classList.remove("ok");
+        out.textContent = "Please enter email and password.";
+        return;
+      }
+
+      loginBtn.disabled = true;
+      loginBtn.textContent = "Signing in...";
+      out.classList.remove("ok");
+      out.textContent = "";
+
+      try {
+        const res = await fetch("http://localhost:5000/api/auth/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email: userEmail,
+            password: userPassword
+          })
+        });
+
+        const data = await res.json();
+
+        if (data.token) {
+          localStorage.setItem("token", data.token);
+          out.classList.add("ok");
+          out.textContent = "Login successful. Redirecting...";
+          window.location.href = "index.html";
+          return;
+        }
+
+        out.classList.remove("ok");
+        out.textContent = data?.message || JSON.stringify(data, null, 2);
+      } catch (error) {
+        out.classList.remove("ok");
+        out.textContent = "Network error. Please try again.";
+      } finally {
+        loginBtn.disabled = false;
+        loginBtn.textContent = "Login";
+      }
+    }
+  </script>
+</body>
+</html>
