@@ -1,4 +1,4 @@
-﻿const API_BASE = "http://localhost:5000/api/diagnosis";
+﻿const API_BASE = "https://pulsepath-nexus.onrender.com/api/diagnosis";
 const THEME_KEY = "pulsepath_theme";
 const token = localStorage.getItem("token");
 
